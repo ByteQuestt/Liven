@@ -47,35 +47,16 @@ pub fn parse_ts() {
             [scoping, "definition", sym] => {
                 println!("gof");
                 let index = i;
-                // let symbol = Some(sym.to_owned());
-                // let scoping = Scoping::from_str(scoping).expect("invalid scope keyword");
-
-                // let l = LocalDefCapture {
-                //     index,
-                //     symbol,
-                //     scoping,
-                // };
-                // local_def_captures.push(l)
+                
             }
             [scoping, "definition"] => {
                 let index = i;
                 println!();
-                // let symbol:Option<T> = None;
-                // let scoping = Scoping::from_str(scoping).expect("invalid scope keyword");
-
-                // let l = LocalDefCapture {
-                //     index,
-                //     symbol,
-                //     scoping,
-                // };
-                // local_def_captures.push(l)
+                
             }
             ["local", "reference"] => {
                 let index = i;
-                // let symbol = None;
-
-                // let l = LocalRefCapture { index, symbol };
-                // local_ref_captures.push(l);
+                
             }
             ["local", "scope"] => (),
             ["local", "import"] => (),
