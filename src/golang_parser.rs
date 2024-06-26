@@ -15,7 +15,7 @@ let code = r#"
 "#;
 let mut parser = Parser::new();
 parser.set_language(&tree_sitter_go::language()).expect("Error loading Go grammar");
-let tree: tree_sitter::Tree = parser.parse(code, None).unwrap();
+let tree: tree_sitter::Tree = parser.parse(&code, None).unwrap();
 let src = "(function_declaration) @local.scope
 (function_declaration) @function
 (method_declaration) @local.scope
@@ -80,13 +80,23 @@ impl Debug for quey{
 }
 
 
-traverse(&tree);
+traverse(&tree, &code);
 assert!(!tree.root_node().has_error());
 print!("{}", tree.root_node());
 print!("parser build")
 }
 
-fn traverse(tree : &Tree ){
+fn traverse(tree : &Tree , code:&str){
+//   let code = r#"
+//  import "fmt"
+
+//  func add(a, b int) int {
+//     return a + b
+// }
+//  func sub(a,b int) int {
+//  return a-b
+// }
+// "#;
   let node:Node = tree.root_node();
   let mut cursor = tree.walk();
   for i in node.children(&mut cursor)
@@ -94,7 +104,9 @@ fn traverse(tree : &Tree ){
   if i.kind() =="function_declaration"{
     let name = i.child_by_field_name("name").unwrap();
     println!("{}",&name);
+    let new= name.utf8_text(&code.as_bytes()).unwrap().to_string();
     println!("{}" ,i.start_position());
+    println!("{}",&new);
     println!("{}", i.end_position());
 
     println!("explain");

@@ -1,7 +1,9 @@
 use tantivy::query;
-use tree_sitter::{Node, Parser, QueryCursor, Query};
+use tree_sitter::{Node, Parser, Query, QueryCursor, TreeCursor};
 use tree_sitter_typescript;
 use tree_sitter::Language;
+use crate::taint_s ;
+
 
 pub fn parse_ts() {
     let code = r#"
@@ -73,8 +75,14 @@ pub fn parse_ts() {
 //    }
    
     let res =query.capture_names();
-    
     let cursor = QueryCursor::new();
+    let mut tree_cursor:TreeCursor = parsed.walk();
+    let node:tree_sitter::Node = parsed.root_node();
+    let mut vect: Vec<String> = vec!{};
+    for i in node.children(&mut tree_cursor){
+    vect.push((&i.kind()).to_string());
+     i.kind();
+}
     // let cursor_cap = cursor.captures(query, root_node, code)
    
     //
