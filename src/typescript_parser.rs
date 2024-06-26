@@ -47,11 +47,14 @@ pub fn parse_ts() {
             [scoping, "definition", sym] => {
                 println!("gof");
                 let index = i;
+                println!("{}", &index);
+                println!("{}", &scoping);
                 
             }
             [scoping, "definition"] => {
                 let index = i;
-                println!();
+                println!("{}", &index);
+                println!("{}", &scoping);
                 
             }
             ["local", "reference"] => {
