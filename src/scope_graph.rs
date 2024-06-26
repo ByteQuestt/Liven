@@ -28,3 +28,9 @@ struct Scope_graph{
     
 }
 
+impl Scope_graph{
+   fn build_sg(&self){
+   
+
+   }
+}
