@@ -1,8 +1,4 @@
 use std::{error, fmt::{Debug, Error}, vec};
-
-
-
-
 use tree_sitter::{Node, Parser, Query, QueryCursor, QueryError, Tree, TreeCursor};
 use tree_sitter_go;
 
@@ -21,6 +17,7 @@ let mut parser = Parser::new();
 parser.set_language(&tree_sitter_go::language()).expect("Error loading Go grammar");
 let tree: tree_sitter::Tree = parser.parse(code, None).unwrap();
 let src = "(function_declaration) @local.scope
+(function_declaration) @function
 (method_declaration) @local.scope
 (func_literal) @local.scope
 (field_declaration_list) @local.scope
@@ -37,16 +34,26 @@ let query = match tree_sitter::Query::new(&tree_sitter_go::language(),&src ) {
       panic!("Failed to create query: {}", error);
   }
 };// let str = query.capture_names();
+// impl<T, A> Debug for Vec<(T, A)>{
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         f.debug_struct("Vec").field("buf", &self.buf()).field("len", &self.len()).finish()
+//     }
+// }
+
 
 let mut vec2: Vec<String> = vec!{};
 for (i, name) in query.capture_names().iter().enumerate() {
  vec2.push((&name).to_string());
  let i = i as u32;
  let parts: Vec<_> = name.split('.').collect();
+//  println!("{}",&parts);
+ 
  match parts.as_slice() {
      [scoping, "definition", sym] => {
          println!("fog");
          let index = i;
+         println!("{}",&scoping);
+         println!("{}",&sym);
         
      }
      [scoping, "definition"] => {
@@ -82,19 +89,28 @@ print!("parser build")
 fn traverse(tree : &Tree ){
   let node:Node = tree.root_node();
   let mut cursor = tree.walk();
-  for i in node.children(&mut cursor){
-  if node.kind() =="function_declaration"{
-    let name = node.child_by_field_name("function_name").unwrap();
-    println!("{}",name);
+  for i in node.children(&mut cursor)
+  {
+  if i.kind() =="function_declaration"{
+    let name = i.child_by_field_name("name").unwrap();
+    println!("{}",&name);
+    println!("{}" ,i.start_position());
+    println!("{}", i.end_position());
+
+    println!("explain");
   }
 }
 ;
 let mut tree_cursor:TreeCursor = tree.walk();
 let node:tree_sitter::Node = tree.root_node();
-let mut vec: Vec<String> = vec!{};
+let mut vect: Vec<String> = vec!{};
 for i in node.children(&mut tree_cursor){
-  vec.push((&i.kind()).to_string());
+  vect.push((&i.kind()).to_string());
   i.kind();
+}
+
+for i in vect.iter(){
+  print!("{}",&i);
 }
     }
 
