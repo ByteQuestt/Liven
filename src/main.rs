@@ -10,8 +10,8 @@ use crate::file_reader::file_read as other_reader;
 
 
 fn main() {
-    let path =r"C:\Users\pranav\Desktop\Bit torrent\bittorrent\server.go";
-    // C:\Users\pranav\Desktop\Backend
+    let path =r"";
+   
 
     println!("Hello, world!");
     parse_ts();

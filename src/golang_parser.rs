@@ -13,8 +13,13 @@ pub fn parse_go(){
 //  return a-b
 // }
 // "#;
+let sc ="go";
 let path =r"";
-let code = file_read(&path).unwrap();
+let code = match file_read(&path){
+Some(code) =>{ code },
+ _=> { (&sc).to_string()
+},
+};
 
 let mut parser = Parser::new();
 parser.set_language(&tree_sitter_go::language()).expect("Error loading Go grammar");

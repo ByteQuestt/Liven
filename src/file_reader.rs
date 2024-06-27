@@ -6,7 +6,7 @@ pub fn file_read(dir:&str) -> Option<String>{
     for entry in entries{
         let path = entry.unwrap().path();
         if path.is_file(){
-            if let Ok( contents)= fs::read_to_string(&path){
+            if let contents= fs::read_to_string(&path).unwrap(){
                 println!("{}", path.display());
                 println!("{}", &contents);
                 return Some(contents);
@@ -15,6 +15,7 @@ pub fn file_read(dir:&str) -> Option<String>{
     }
   }
   None
+  
 
 
 }
