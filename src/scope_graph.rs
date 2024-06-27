@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::vec::Vector;
+use std::vec;
 use petgraph::graph::*;
 
 enum Nodekind{
