@@ -13,7 +13,7 @@ pub fn parse_go(){
 //  return a-b
 // }
 // "#;
-let path =r"C:\Users\pranav\Desktop\Bit torrent\bittorrent\server.go";
+let path =r"";
 let code = file_read(&path).unwrap();
 
 let mut parser = Parser::new();
