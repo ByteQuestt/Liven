@@ -12,7 +12,6 @@ use crate::file_reader::file_read as other_reader;
 
 
 fn main() {
-    // let path = r"C:\Users\pranav\Desktop\Bit torrent\bittorrent\server.go";
     let args: Vec<String> = env::args().skip(1).collect();
     let path = &args[1];
     println!("{}",&args[1]);
