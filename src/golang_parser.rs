@@ -1,18 +1,21 @@
 use std::{error, fmt::{Debug, Error}, vec};
 use tree_sitter::{Node, Parser, Query, QueryCursor, QueryError, Tree, TreeCursor};
 use tree_sitter_go;
+use crate::file_reader::file_read;
 
 pub fn parse_go(){
-let code = r#"
- import "fmt"
+// let code = r#"
+//  import "fmt"
+//  func add(a, b int) int {
+//     return a + b
+// }
+//  func sub(a,b int) int {
+//  return a-b
+// }
+// "#;
+let path =r"C:\Users\pranav\Desktop\Bit torrent\bittorrent\server.go";
+let code = file_read(&path).unwrap();
 
- func add(a, b int) int {
-    return a + b
-}
- func sub(a,b int) int {
- return a-b
-}
-"#;
 let mut parser = Parser::new();
 parser.set_language(&tree_sitter_go::language()).expect("Error loading Go grammar");
 let tree: tree_sitter::Tree = parser.parse(&code, None).unwrap();
