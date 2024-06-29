@@ -13,13 +13,13 @@ pub fn parse_go( code :&String){
 //  return a-b
 // }
 // "#;
-let sc ="go";
-let path =r"";
-let code = match file_read(&path){
-Some(code) =>{ code },
- _=> { (&sc).to_string()
-},
-};
+// let sc ="go";
+// let path =r"";
+// let code = match file_read(&path){
+// Some(code) =>{ code },
+//  _=> { (&sc).to_string()
+// },
+// };
 
 
 let mut parser = Parser::new();

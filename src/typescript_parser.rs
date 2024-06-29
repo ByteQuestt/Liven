@@ -91,14 +91,20 @@ pub fn parse_ts() {
         println!("{}", i.end_position());
     
         println!("explain");
-        
+      match i.kind(){
+        "function_declartion"=> {
+            let st = i.start_position();
+            let en = i.end_position();
+        }
+        _=>(),
+      }  
      }
+     
      
      }
 
 }
 let dir = r"";
-read_line(&dir, 1, 10, 8, 10)
     // let cursor_cap = cursor.captures(query, root_node, code)
    
     //
