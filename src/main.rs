@@ -4,6 +4,7 @@ mod golang_parser;
 mod file_reader;
 use std::env;
 
+use file_reader::read_line;
 // use typescript_parser::parse;
 use golang_parser::parse_go;
 use taint_s::{self as not_taint, schema_build};
@@ -19,8 +20,11 @@ fn main() {
     parse_ts();
     schema_build();
     println!("NOT SO GOODDD");
-    parse_go();
+    let code= file_reader::file_read(&path).unwrap();
+
+    parse_go(&code);
     println!("parsing go");
+    
     file_reader::file_read(&path);
     // parse();
 }

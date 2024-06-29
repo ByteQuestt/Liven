@@ -3,7 +3,7 @@ use tree_sitter::{Node, Parser, Query, QueryCursor, QueryError, Tree, TreeCursor
 use tree_sitter_go;
 use crate::file_reader::file_read;
 
-pub fn parse_go(){
+pub fn parse_go( code :&String){
 // let code = r#"
 //  import "fmt"
 //  func add(a, b int) int {
@@ -119,6 +119,7 @@ fn traverse(tree : &Tree , code:&str){
     println!("{}", i.end_position());
 
     println!("explain");
+    ( i.start_position() ,i.end_position());
   }
 }
 ;

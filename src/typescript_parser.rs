@@ -2,7 +2,8 @@ use tantivy::query;
 use tree_sitter::{Node, Parser, Query, QueryCursor, TreeCursor};
 use tree_sitter_typescript;
 use tree_sitter::Language;
-use crate::taint_s ;
+use crate::{file_reader, taint_s} ;
+use file_reader::read_line;
 
 
 pub fn parse_ts() {
