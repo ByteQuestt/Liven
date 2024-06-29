@@ -5,16 +5,23 @@ use std::path::Path;
 
 
 pub fn read_line(dir:&str ,st_ind:usize, end_ind: usize, col_st:usize, col_end:usize){
-    let _ = st_ind;
-  let path = Path::new(dir);
-  let file = File::open(&path).unwrap();
+   
+  
+  let  file = match File::open(dir){
+    Ok(file) => file,
+    Err(error)=> panic!("Error is {}",&error),
+
+  };
+
   let mut  buf_read = BufReader::new(file);
   //   Some(buf_read) => {buf_read;}
   //   Error(err) => (),
   // }
+  println!("is it working");
   let mut code_snip = String::new();
   for (lineno,line) in buf_read.lines().enumerate(){
     let line = line.unwrap();
+    println!("{}",&line);
     if lineno +1 > end_ind{
       break
     }
@@ -27,6 +34,7 @@ pub fn read_line(dir:&str ,st_ind:usize, end_ind: usize, col_st:usize, col_end:u
         col_end-1
       }
       else{0};
+      println!("cool");
       code_snip.push_str(&line[start_index..end_index]);
 
     }

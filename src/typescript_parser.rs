@@ -82,8 +82,23 @@ pub fn parse_ts() {
     let mut vect: Vec<String> = vec!{};
     for i in node.children(&mut tree_cursor){
     vect.push((&i.kind()).to_string());
-     i.kind();
+     if i.kind() == "function_declaration"{
+        let name = i.child_by_field_name("name").unwrap();
+        println!("{}",&name);
+        let new= name.utf8_text(&code.as_bytes()).unwrap().to_string();
+        println!("{}" ,i.start_position());
+        println!("{}",&new);
+        println!("{}", i.end_position());
+    
+        println!("explain");
+        
+     }
+     
+     }
+
 }
+let dir = r"";
+read_line(&dir, 1, 10, 8, 10)
     // let cursor_cap = cursor.captures(query, root_node, code)
    
     //
@@ -97,5 +112,5 @@ pub fn parse_ts() {
     // }
     
 }
-}    
+  
 
