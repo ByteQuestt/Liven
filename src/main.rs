@@ -2,6 +2,7 @@ mod taint_s;
 mod typescript_parser;
 mod golang_parser;
 mod file_reader;
+mod server_build;
 use std::env;
 
 
