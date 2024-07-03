@@ -9,8 +9,7 @@ use axum::{
     Router,
 };
 async fn  build_server(){
-    let app = Router::new();
-     
+    let app = Router::new().route("/upload", post(upload));
     let addr = SocketAddr::from(([127,0,0,1], 8000));
     let tcpa = TcpListener::bind(&addr).await.unwrap();
 
