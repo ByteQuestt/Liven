@@ -7,7 +7,7 @@ edition = "2021"
 axum = { version = "0.7.5", features = ["multipart"] }
 petgraph = "0.6.5"
 tantivy = "0.22.0"
-tokio = "1.38.0"
+tokio = { version = "1.38.0", features = ["macros", "rt-multi-thread"] }
 tree-sitter = "0.22.6"
 tree-sitter-go = "0.21.0"
 tree-sitter-typescript = "0.21.1"

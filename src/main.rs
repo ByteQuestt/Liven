@@ -11,6 +11,7 @@ use golang_parser::parse_go;
 use taint_s::{self as not_taint, schema_build};
 use typescript_parser::parse_ts ;
 use crate::file_reader::file_read as other_reader;
+use crate::server_build as serverbuilding;
 
 
 fn main() {
@@ -25,7 +26,8 @@ fn main() {
 
     parse_go(&code);
     println!("parsing go");
+   server_build::build_server();
     
     file_reader::file_read(&path);
-    // parse();
+   
 }
