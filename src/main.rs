@@ -4,6 +4,7 @@ mod golang_parser;
 mod file_reader;
 mod server_build;
 use std::env;
+mod scope_graph;
 
 
 // use typescript_parser::parse;
@@ -12,6 +13,7 @@ use taint_s::{self as not_taint, schema_build};
 use typescript_parser::parse_ts ;
 use crate::file_reader::file_read as other_reader;
 use crate::server_build as serverbuilding;
+use scope_graph::scopebuild;
 
 
 fn main() {
@@ -23,6 +25,7 @@ fn main() {
     schema_build();
     println!("NOT SO GOODDD");
     let code= file_reader::file_read(&path).unwrap();
+    scopebuild();
 
     parse_go(&code);
     println!("parsing go");
