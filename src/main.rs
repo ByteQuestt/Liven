@@ -5,6 +5,7 @@ mod file_reader;
 mod server_build;
 use std::env;
 mod scope_graph;
+mod query;
 
 
 // use typescript_parser::parse;
