@@ -14,13 +14,27 @@ struct query {
     kind : querykind,
 }
 
-impl query{
-
 fn query(s:String) {
     let q: query = query{
         query :s,
         kind : querykind::search,
+        
     };
+    q;
 }
+impl query{
+
+fn querys(s:String) {
+    let q: query = query{
+        query :s,
+        kind : querykind::search,
+    };
+
+// fn search(s:String){
+
+// }
+
+}
+
 
 }
