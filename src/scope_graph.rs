@@ -4,6 +4,9 @@ use petgraph::graph::*;
 
 enum Nodekind{
     
+    defnode,
+    scope,
+
 }
 
 struct Node{
@@ -16,10 +19,16 @@ enum symbol {
  function,
 
 
+
 }
 
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 enum Edgekind{
-    
+    nested,
+    scopetoscope,
+    method,
+
+
 
 }
 struct Scope_graph{
@@ -30,7 +39,15 @@ struct Scope_graph{
 
 impl Scope_graph{
    fn build_sg(&self){
-   
+    let mut graph =Graph::new();
+    let root = graph.add_node(Nodekind::scope);
+    Scope_graph{
+      graph,
+      root
+    };
+
+    
+
 
    }
 }
