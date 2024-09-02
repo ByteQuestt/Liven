@@ -2,14 +2,28 @@
 use std::net::SocketAddr;
 use axum::{
     body::{Body, HttpBody},
-    extract::{Multipart, Path},
+    extract::{self, Multipart, Path},
     handler::Handler,
     response::{IntoResponse, Response},
     routing::{get, post},
     Router,
 };
 use std::io::{prelude::*, BufReader};
+use serde::{Deserialize, Serialize};
 
+#[derive(Deserialize, Serialize)]
+struct response{
+    func:String,
+    line: usize,
+    col :usize,
+
+}
+
+
+struct request {
+    func:String,
+    file_path:String,
+}
 // pub(crate) async fn  build_server(){
 //     // let app = Router::new().route("/upload", post(upload)).route("/", get(|| async { "Hello, World!" }));
 //     // let addr = SocketAddr::from(([127,0,0,1], 8000));
@@ -73,6 +87,9 @@ pub async fn build_server() {
     let tcpa= TcpListener::bind(&addr).await.unwrap();
     axum::serve(tcpa , app.into_make_service());
       
+}
+async fn create_user(extract::Json(payload): extract::Json<request>) {
 
 
+    
 }

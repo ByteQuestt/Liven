@@ -2,7 +2,7 @@ mod taint_s;
 mod typescript_parser;
 mod golang_parser;
 mod file_reader;
-mod server_build;
+mod server;
 use std::env;
 mod scope_graph;
 mod query;
@@ -14,7 +14,7 @@ use taint_s::{self as not_taint, schema_build, search,index};
 use tantivy::index;
 use typescript_parser::parse_ts ;
 use crate::file_reader::file_read as other_reader;
-use crate::server_build as serverbuilding;
+use crate::server as serverbuilding;
 use scope_graph::scopebuild;
 
 
@@ -35,7 +35,7 @@ fn main() {
     
     file_reader::file_read(&path);
     search(r"", "double");
-    server_build::build_server();
+    server::build_server();
 
    
 }

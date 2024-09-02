@@ -39,24 +39,23 @@ struct Scope_graph{
     
 }
 
-impl Scope_graph{
-   fn build_sg(&self, node:)-> Scope_graph
-   {
-    let mut graph =Graph::new();
-    let node  = ;
-    let root = graph.add_node(node);
-    return Scope_graph{
-      graph,
-      root
-    };
+// impl Scope_graph{
+//    fn build_sg(&self, )
+//    {
+//     let mut graph =Graph::new();
+//     // let node  = ;
+//     // let root = graph.add_node(node);
+//     // return Scope_graph{
+//     //   graph,
+//     //   root
+//     }
 
-   }
-   fn insertscope(&self , node:Node ){
-    self.graph.add_node(node);
+//     fn insertscope(&self , node:Node ){
+//     // self.graph.add_node(node);
 
 
-   }
-}
+//    }
+//   }
 #[derive(Debug)]
 struct Function{
   name: String,

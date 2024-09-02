@@ -3,23 +3,29 @@ use tree_sitter::{Node, Parser, Query, QueryCursor, QueryError, Tree, TreeCursor
 use tree_sitter_go;
 use crate::file_reader::file_read;
 
-pub fn parse_go( code :&String){
-// let code = r#"
-//  import "fmt"
-//  func add(a, b int) int {
-//     return a + b
-// }
-//  func sub(a,b int) int {
-//  return a-b
-// }
-// "#;
-// let sc ="go";
-// let path =r"";
-// let code = match file_read(&path){
-// Some(code) =>{ code },
-//  _=> { (&sc).to_string()
-// },
-// };
+pub fn parse_go(code:&str ){
+let code = r#"
+ import "fmt"
+ type sf struct{
+   var a int
+ }
+
+
+
+ func add(a, b int) int {
+    return a + b
+}
+ func sub(a,b int) int {
+ return a-b
+}
+"#;
+let sc ="go";
+let path =r"";
+let code = match file_read(&path){
+Some(code) =>{ code },
+ _=> { (&sc).to_string()
+},
+};
 
 
 let mut parser = Parser::new();
@@ -35,6 +41,16 @@ let src = "(function_declaration) @local.scope
 (import_spec 
   (package_identifier) @local.import)
 (block) @local.scope
+(type_alias
+  .
+  (type_identifier) @local.definition.type)
+
+;; type _ struct {
+;;    x T
+;; }
+(field_declaration_list
+  (field_declaration 
+    (field_identifier) @local.definition.member))
 ";
 let query = match tree_sitter::Query::new(&tree_sitter_go::language(),&src ) {
   Ok(query) => query,
@@ -63,6 +79,7 @@ for (i, name) in query.capture_names().iter().enumerate() {
          let index = i;
          println!("{}",&scoping);
          println!("{}",&sym);
+         
         
      }
      [scoping, "definition"] => {
