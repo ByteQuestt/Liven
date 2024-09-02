@@ -2,16 +2,18 @@ use std::collections::HashMap;
 use std::vec;
 use petgraph::graph::*;
 
-enum Nodekind{
-    
-    defnode,
-    scope,
 
-}
 
 struct Node{
   symbol : symbol,
-  
+  kind :Nodekind,
+  range : (i8,i8),
+}
+
+#[derive(Debug, Clone)]
+enum Nodekind{
+  Defnode,
+  scope,
 
 }
 enum symbol {
@@ -38,15 +40,19 @@ struct Scope_graph{
 }
 
 impl Scope_graph{
-   fn build_sg(&self){
+   fn build_sg(&self, node:)-> Scope_graph
+   {
     let mut graph =Graph::new();
-    let root = graph.add_node(Nodekind::scope);
-    Scope_graph{
+    let node  = ;
+    let root = graph.add_node(node);
+    return Scope_graph{
       graph,
       root
     };
 
-    
+   }
+   fn insertscope(&self , node:Node ){
+    self.graph.add_node(node);
 
 
    }
