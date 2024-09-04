@@ -1,28 +1,22 @@
  use tokio::net::{TcpListener, TcpStream};
 use std::net::SocketAddr;
 use axum::{
-    body::{Body, HttpBody},
-    extract::{self, Multipart, Path},
-    handler::Handler,
-    response::{IntoResponse, Response},
-    routing::{get, post},
-    Router,
+    body::{Body, HttpBody}, extract::{self, Multipart, Path}, handler::Handler, http::StatusCode, response::{IntoResponse, Json, Response}, routing::{get, post}, Router
 };
 use std::io::{prelude::*, BufReader};
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize)]
-struct response{
-    func:String,
-    line: usize,
-    col :usize,
+struct cresponse{
+    snippet : String
 
 }
 
-
-struct request {
-    func:String,
+#[derive(Deserialize, Serialize)]
+struct crequest {
+    function_name :String,
     file_path:String,
+    repo_name : String,
 }
 // pub(crate) async fn  build_server(){
 //     // let app = Router::new().route("/upload", post(upload)).route("/", get(|| async { "Hello, World!" }));
@@ -70,26 +64,37 @@ async fn upload(mut multipart: Multipart) {
 
 #[tokio::main]
 pub async fn build_server() {
-    let app = axum::Router::new().route("/upload", post(upload));
-    let addr = SocketAddr::from(([127,0,0,1], 8000));
+    let app = axum::Router::new().route("/upload", post(upload)).route("/context", post(sendcontext)).route("/test",get(hello));
+    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     let tcpa = TcpListener::bind(&addr).await.unwrap();
     println!("server build");
-    
+    axum::serve(tcpa , app.into_make_service()).await.unwrap();
 
-    for stream in tcpa.accept().await{
-        let (stream,_) = stream;
 
-        handle_connection(stream);
-    }
+    // loop {
+    //     let (stream, _) = tcpa.accept().await.unwrap();
+    //     println!("listening on {}", addr);
+    //     // Handle the connection in a separate task
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+    //     handle_connection(stream);
+        
+    // }
+
     println!("listening on {}", addr);
-    let tcpa= TcpListener::bind(&addr).await.unwrap();
-    axum::serve(tcpa , app.into_make_service());
       
 }
-async fn create_user(extract::Json(payload): extract::Json<request>) {
-
-
+async fn sendcontext(extract::Json(payload): extract::Json<crequest>)-> Json<cresponse> {
+  
+     println!("served request");
+     let snippet:String ="import happiness".to_owned();
+     let respons = cresponse {
+        snippet,
+    };
+     println!("serving");
+  return Json(respons)
     
+}
+
+async fn hello()->Json<String>{
+    return Json("hello".to_string())
 }
