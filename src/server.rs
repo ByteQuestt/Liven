@@ -64,7 +64,7 @@ async fn upload(mut multipart: Multipart) {
 
 #[tokio::main]
 pub async fn build_server() {
-    let app = axum::Router::new().route("/upload", post(upload)).route("/context", post(sendcontext)).route("/test",get(hello));
+    let app = axum::Router::new().route("/upload", post(upload)).route("/context", get(sendcontext)).route("/test",get(hello));
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     let tcpa = TcpListener::bind(&addr).await.unwrap();
     println!("server build");
@@ -83,18 +83,30 @@ pub async fn build_server() {
     println!("listening on {}", addr);
       
 }
-async fn sendcontext(extract::Json(payload): extract::Json<crequest>)-> Json<cresponse> {
+// async fn sendcontext(extract::Json(payload): extract::Json<crequest>)-> impl IntoResponse {
   
-     println!("served request");
-     let snippet:String ="import happiness".to_owned();
-     let respons = cresponse {
-        snippet,
-    };
-     println!("serving");
-  return Json(respons)
+//      println!("served request");
+//      let snippet:String ="import happiness".to_owned();
+//      let respons = cresponse {
+//         snippet,
+//     };
+//      println!("serving");
+//   return Json(respons)
     
+
+// }
+async fn sendcontext()-> impl IntoResponse {
+  
+    println!("served request");
+    let snippet:String ="import happiness".to_owned();
+    let respons = cresponse {
+       snippet,
+   };
+    println!("serving");
+ return Json(respons)
+   
 }
 
-async fn hello()->Json<String>{
-    return Json("hello".to_string())
+async fn hello()->impl IntoResponse{
+    return "hello from rust".to_string()
 }
