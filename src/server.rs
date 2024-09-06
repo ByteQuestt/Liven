@@ -5,6 +5,8 @@ use axum::{
 };
 use std::io::{prelude::*, BufReader};
 use serde::{Deserialize, Serialize};
+// use tokio::fs::DirBuilder;
+// use tokio::fs::File;
 
 #[derive(Deserialize, Serialize)]
 struct cresponse{
@@ -50,16 +52,23 @@ fn handle_connection(mut stream : TcpStream) {
 
     println!("Request: ");
 }
-async fn upload(mut multipart: Multipart) {
-    while let Some(mut field) = multipart.next_field().await.unwrap() {
-        let name = field.name().unwrap().to_string();
+async fn upload(mut multipart: Multipart)-> impl IntoResponse {
+    while let Some(field) = multipart.next_field().await.unwrap() {
+        // let name = field.name().unwrap().to_string();
+        let name = field.file_name().unwrap().to_string();
+        
         let data = field.bytes().await.unwrap();
         // checking for the file field
-        if name == "file"{
+       
             // converting file content from bytes 
-            let content = String::from_utf8(data.to_vec());
-        }
+        let content = String::from_utf8(data.to_vec()).unwrap();
+        println!("{}",&content);
+        println!("serving");
+
+        
+        
     };
+    StatusCode::CREATED
 }
 
 #[tokio::main]
